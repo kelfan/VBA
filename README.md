@@ -1387,6 +1387,32 @@ Sub MakeAPivotTable()
 End Sub
 ```
 
+# userform/ Enter Data into last Row 
+1. insert activeX controls (command Button)
+2. formulas -> Name Manager -> new "lastRow":[=OFFSET(userform!$A$1,COUNTA(userform!$A:$A),0)] 
+3. insert "userform" [frm_EnterData] -> Button:"Enter Data","Close"; Textbox; label 
+
+```vb
+Private Sub btn_CloseForm_Click()
+
+    Unload frm_EnterData 'closes the Form
+
+End Sub
+
+Private Sub btn_EnterDataClick_Click()
+    
+    Dim xrow As Long
+
+    Sheets("userform").Select
+    xrow = Range("lastrow").Row 'find the last Row To use
+    
+    'move Data From the From To the worksheet
+    'Cells(xrow, 1).Value = frm_EnterData.txt_Name.Value
+    Cells(xrow, 1).Value = txt_Name.Value
+    
+End Sub
+```
+
 # with 语句
 With 语句可以对某个对象执行一系列的语句，而不用重复指出对象的名称。例如，要改变一个对象的多个属性，可以在 With 控制结构中加上属性的赋值语句，这时候只是引用对象一次而不是在每个属性赋值时都要引用它。下面的例子显示了如何使用 With 语句来给同一个对象的几个属性赋值。
 ```vb
