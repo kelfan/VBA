@@ -1413,6 +1413,92 @@ Private Sub btn_EnterDataClick_Click()
 End Sub
 ```
 
+# userform/ combobox 下拉菜单 
+```vb
+Private Sub btn_EnterDataClick_Click()
+    
+    Dim xrow As Long
+    
+    If txt_Name.Value = "" Then
+        msgbox ("you must Enter a Name")
+        Exit Sub
+    End If
+    
+    If combo_feeling.Value = "Select" Then
+        msgbox ("you must Select A feeling")
+        Exit Sub
+    End If
+
+    Sheets("userform").Select
+    Range("A2:z50000").ClearContents
+    
+    xrow = Range("lastrow").Row 'find the last Row To use
+    
+    'move Data From the From To the worksheet
+    'Cells(xrow, 1).Value = frm_EnterData.txt_Name.Value
+    Cells(xrow, 1).Value = txt_Name.Value
+    Cells(xrow, 2).Value = combo_feeling.Value
+    
+    
+End Sub
+
+Private Sub UserForm_Initialize()
+
+    combo_feeling.AddItem "I feel good."
+    combo_feeling.AddItem "I feel bad."
+    combo_feeling.AddItem "Select"
+    combo_feeling.Value = "Select" 'sets the value Of the combobox
+
+End Sub
+```
+
+# userform/ listbox 列表 
+```vb
+Private Sub btn_EnterDataClick_Click()
+    
+    Dim xrow As Long
+    
+    If txt_Name.Value = "" Then
+        msgbox ("you must Enter a Name")
+        Exit Sub
+    End If
+    
+    If combo_feeling.Value = "Select" Then
+        msgbox ("you must Select A feeling")
+        Exit Sub
+    End If
+
+    Sheets("userform").Select
+    Range("A2:z50000").ClearContents
+    
+    xrow = Range("lastrow").Row 'find the last Row To use
+    
+    'move Data From the From To the worksheet
+    'Cells(xrow, 1).Value = frm_EnterData.txt_Name.Value
+    Cells(xrow, 1).Value = txt_Name.Value
+    Cells(xrow, 2).Value = combo_feeling.Value
+    Cells(xrow, 3).Value = ListBox_Age.Value
+    
+    
+End Sub
+
+
+Private Sub UserForm_Initialize()
+    Dim i As Integer
+
+    combo_feeling.AddItem "I feel good."
+    combo_feeling.AddItem "I feel bad."
+    combo_feeling.AddItem "Select"
+    combo_feeling.Value = "Select" 'sets the value Of the combobox
+
+    For i = 1 To 150
+        ListBox_Age.AddItem i
+    Next i
+    ListBox_Age.Value = 25
+
+End Sub
+```
+
 # with 语句
 With 语句可以对某个对象执行一系列的语句，而不用重复指出对象的名称。例如，要改变一个对象的多个属性，可以在 With 控制结构中加上属性的赋值语句，这时候只是引用对象一次而不是在每个属性赋值时都要引用它。下面的例子显示了如何使用 With 语句来给同一个对象的几个属性赋值。
 ```vb
