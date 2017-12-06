@@ -1499,6 +1499,160 @@ Private Sub UserForm_Initialize()
 End Sub
 ```
 
+
+# insert picture into Excel 
+https://msdn.microsoft.com/en-us/vba/excel-vba/articles/shapes-addpicture-method-excel?f=255&MSPPError=-2147217396
+```vb
+Set myDocument = Worksheets(1) 
+myDocument.Shapes.AddPicture _ 
+    "c:\microsoft office\clipart\music.bmp", _ 
+    True, True, 100, 100, 70, 70
+```
+
+# delete all pictures in the diagram 
+```vb
+Sub deletePic()
+
+    Dim shape As Excel.shape
+    
+    For Each shape In ActiveSheet.Shapes
+            shape.Delete
+    Next
+
+End Sub
+```
+
+# insert picture From relative address 
+```vb
+Sub testInsertPic2()
+
+    Dim str As String
+    str = CreateObject("Scripting.FileSystemObject").GetParentFolderName(ThisWorkbook.FullName)
+
+    Set myDocument = Worksheets(1)
+    
+myDocument.Shapes.AddPicture _
+    str & "\dt.png", _
+    True, True, 100, 100, 70, 70
+    
+End Sub
+```
+
+# insert picture from external python output
+```vb
+Sub testInsertPicFromPython()
+
+    'acquire the path of folder that contain the Excel File
+    Dim str As String
+    str = CreateObject("Scripting.FileSystemObject").GetParentFolderName(ThisWorkbook.FullName)
+    
+    'delete previous generate pictures
+    Dim shape As Excel.shape
+    For Each shape In ActiveSheet.Shapes
+            shape.Delete
+    Next
+    
+    'execute the external python file
+    Dim result As String
+    result = ShellRun2("python " & str & "\dtTest.py" & " -p " & str)
+    
+    
+    'display the picture in the excel File
+    Set myDocument = Worksheets(1)
+    myDocument.Shapes.AddPicture _
+        str & "\dtTest.png", _
+        True, True, 100, 100, 70, 70
+    
+End Sub
+
+Public Function ShellRun2(sCmd As String) As String
+
+    'Run a shell command, returning the output as a string'
+    Dim oShell As Object
+    Set oShell = CreateObject("WScript.Shell")
+
+    'run command'
+    Dim oExec As Object
+    Dim oOutput As Object
+    Set oExec = oShell.Exec(sCmd)
+    Set oOutput = oExec.StdOut
+
+    'handle the results as they are written to and read from the StdOut object'
+    Dim s As String
+    Dim sLine As String
+    While Not oOutput.AtEndOfStream
+        sLine = oOutput.ReadLine
+        If sLine <> "" Then s = s & sLine & vbCrLf
+    Wend
+
+    ShellRun2 = s
+
+End Function
+```
+
+```python
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
+import sklearn.datasets as datasets
+import pandas as pd
+import os
+import sys, getopt
+
+def main(argv):
+    path = ''
+    try:
+        opts, args = getopt.getopt(argv,"hp:",["path="])
+    except getopt.GetoptError:
+        print ('test.py -p <path>')
+        sys.exit(2)
+    for opt, arg in opts:
+        if opt == '-h':
+            print ('test.py -p <path>')
+            sys.exit()
+        elif opt in ("-p", "--path"):
+            path = arg
+    # print ('输入的文件为：', path + '\dt.png')
+    
+    iris=datasets.load_iris()
+    df=pd.DataFrame(iris.data, columns=iris.feature_names)
+    y=iris.target
+    from sklearn.tree import DecisionTreeClassifier
+    dtree=DecisionTreeClassifier()
+    dtree.fit(df,y)
+    from sklearn.externals.six import StringIO  
+    from IPython.display import Image  
+    from sklearn.tree import export_graphviz
+    import pydotplus
+    dot_data = StringIO()
+    export_graphviz(dtree, out_file=dot_data,filled=True, rounded=True,special_characters=True)
+    graph = pydotplus.graph_from_dot_data(dot_data.getvalue())  
+    Image(graph.create_png())
+    graph.write_png(path + '\dtTest.png')
+    print(os.getcwd())
+
+if __name__ == "__main__":
+    main(sys.argv[1:])
+```
+
+
+# 转义 双引号 两个引号等于内引号 
+```vb
+Sub testQuota()
+
+    str1 = " '{""outlook"": [1, 2], ""temperature"": [85, 80], ""target"":[1,2]}' "
+    'str1 = "="">>"" & rc[-1]"
+    
+    MsgBox (str1)
+    
+    str2 = "'1,2'"
+    
+    str4 = "1"
+    
+    str3 = ""
+
+End Sub
+```
+
 # with 语句
 With 语句可以对某个对象执行一系列的语句，而不用重复指出对象的名称。例如，要改变一个对象的多个属性，可以在 With 控制结构中加上属性的赋值语句，这时候只是引用对象一次而不是在每个属性赋值时都要引用它。下面的例子显示了如何使用 With 语句来给同一个对象的几个属性赋值。
 ```vb
