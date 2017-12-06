@@ -43,3 +43,5 @@ End Sub
 - [Control External Processes using VBA (FTP example) (cc)](https://www.youtube.com/watch?v=fMWWcoXnzHc)
 - [Excel VBA Introduction Part 49 - Downloading Files from Websites](https://www.youtube.com/watch?v=JPezrWwvsJM)
 - [Webinar: Python for Excel with PyXLL](https://www.youtube.com/watch?v=0RzTsvBIhaE)
+
+- [Excel VBA: Insert Picture from Directory on Cell Value Change](https://www.youtube.com/watch?v=VUl3l9wB51M)
