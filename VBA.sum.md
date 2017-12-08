@@ -1653,6 +1653,32 @@ Sub testQuota()
 End Sub
 ```
 
+# shell 执行外部文件 
+https://support.office.com/en-us/article/Shell-Function-ff2e4b1b-712d-4e34-aea6-6832eadd3c63?CorrelationId=f86c651b-1f41-494c-a627-07ae62945088&ui=en-US&rs=en-US&ad=US&ocmsassetID=HA001228906
+```vb
+' Specifying 1 as the second argument 
+' opens the application in normal size and 
+' gives it the focus.
+Dim RetVal
+' Run Calculator.
+RetVal = Shell("C:\WINDOWS\CALC.EXE", 1)
+```
+
+# shellExecute 执行命令 
+https://msdn.microsoft.com/en-us/library/windows/desktop/bb762153.aspx
+# OpenProcess 打开程序 
+https://msdn.microsoft.com/en-us/library/windows/desktop/ms684320.aspx
+
+
+# Byval vs Byref = 按值传递 vs 按地址传递 
+https://zhidao.baidu.com/question/584794997.html
+
+# delete pictures 删除图片 
+```vb
+ActiveSheet.Pictures.Delete
+Worksheets("Sheet1").Pictures.Delete
+```
+
 # with 语句
 With 语句可以对某个对象执行一系列的语句，而不用重复指出对象的名称。例如，要改变一个对象的多个属性，可以在 With 控制结构中加上属性的赋值语句，这时候只是引用对象一次而不是在每个属性赋值时都要引用它。下面的例子显示了如何使用 With 语句来给同一个对象的几个属性赋值。
 ```vb
@@ -1679,3 +1705,8 @@ developer .] visual basic .] bar[object browser]
 - breakpoint
 
 https://www.youtube.com/watch?v=SpnWO6GOvrY&list=PL3A6U40JUYCi4njVx59-vaUxYkG0yRO4m&index=11
+
+
+# resources 
+- [Excel VBA Introduction](https://www.youtube.com/playlist?list=PLNIs-AWhQzckr8Dgmgb3akx_gFMnpxTN5)
+- [14-Hour VBA appilycation](https://www.youtube.com/playlist?list=PL3QcRfaZlYcYCa7KMbp2IiIswYQz8DpWL)
